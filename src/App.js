@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Planets from './components/Planets';
 import People from './components/People';
 import style from 'styled-components';
+import {ReactQueryDevTools} from 'react-query-devtools';
 
 const AppDiv = style.div`
   width: 960px;
@@ -24,13 +25,16 @@ function App() {
   const [page, setPage] = useState('planets');
 
   return (
-    <AppDiv>
-     <H1Div>StarWars Info</H1Div>
-     <Navbar setPage={setPage}/>
-     <ContentDiv>
-       {page === 'planets' ? (<Planets/>) : (<People/>)}
-     </ContentDiv>
-    </AppDiv>
+    <>
+      <AppDiv>
+      <H1Div>StarWars Info</H1Div>
+      <Navbar setPage={setPage}/>
+      <ContentDiv>
+        {page === 'planets' ? (<Planets/>) : (<People/>)}
+      </ContentDiv>
+      </AppDiv>
+      <ReactQueryDevTools initalIsOpen={false} />
+    </>
   );
 }
 

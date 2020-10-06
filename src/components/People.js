@@ -14,6 +14,7 @@ const People = () => {
     const {data, status} = useQuery('people', fetchPeople);
 
     return (<div>
+        <h2>People</h2>
         {status === 'error' && (<div>Error fetching data</div>)}
         {status === 'loading' && (<div>Lodaing data...</div>)}
         {status === 'success' && (<div>{data.results.map(person => <Person key={person.name} person={person}/>)}</div>)}
