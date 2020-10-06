@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import { usePaginatedQuery } from 'react-query';
 import Planet from './Planet';
 import {ButtonStyle} from './utilities/Utilities';
 
@@ -10,18 +10,24 @@ const fetchPlanets = async (key, page) => {
 
 const Planets = () => {
     const [page, setPage] = useState(1);
-    const {data, status} = useQuery(['planets', page], fetchPlanets);
-    console.log(data);
+    const {resolvedData, latestData, status} = usePaginatedQuery(['planets', page], fetchPlanets);
+
     return (<div>
         <h2>Planets</h2>
-        
-        <ButtonStyle onClick={() => setPage(1)}>Page 1</ButtonStyle>
-        <ButtonStyle onClick={() => setPage(2)}>Page 2</ButtonStyle>
-        <ButtonStyle onClick={() => setPage(3)}>Page 3</ButtonStyle>
 
         {status === 'error' && (<div>Error fetching data</div>)}
         {status === 'loading' && (<div>Lodaing data...</div>)}
-        {status === 'success' && (<div>{data.results.map(planet => <Planet key={planet.name} planet={planet}/>)}</div>)}
+        {status === 'success' && (<>
+            {/* get the max value between a pos and a neg so we cannot never get into neg */}
+            <ButtonStyle onClick={() => setPage(old => Math.max(old - 1, 1))} disabled={page === 1}>Previous Page</ButtonStyle>
+            <span>{ page }</span>
+            {/* check if latestData or latestData.next exists and get it otherwise stay where we are */}
+            <ButtonStyle 
+                onClick={() => setPage(old => (!latestData || !latestData.next ? old : old + 1))} 
+                disabled={!latestData || !latestData.next}>
+                Next Page
+            </ButtonStyle>
+            <div>{resolvedData.results.map(planet => <Planet key={planet.name} planet={planet}/>)}</div></>)}
     </div>);
 }
 
