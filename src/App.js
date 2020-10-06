@@ -1,25 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import Navbar from './components/Navbar';
+import Planets from './components/Planets';
+import People from './components/People';
+import style from 'styled-components';
+
+const AppDiv = style.div`
+  width: 960px;
+  margin: 0 auto;
+`;
+
+const H1Div = style.h1`
+  color: #ffff57;
+  font-size: 4em;
+  letter-spacing: 2px;
+`;
+
+const ContentDiv = style.div`
+  text-align: left;
+`;
 
 function App() {
+
+  const [page, setPage] = useState('planets');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppDiv>
+     <H1Div>StarWars Info</H1Div>
+     <Navbar setPage={setPage}/>
+     <ContentDiv>
+       {page === 'planets' ? (<Planets/>) : (<People/>)}
+     </ContentDiv>
+    </AppDiv>
   );
 }
 
