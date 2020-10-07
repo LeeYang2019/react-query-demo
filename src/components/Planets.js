@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { usePaginatedQuery } from 'react-query';
 import Planet from './Planet';
-import {ButtonStyle} from './utilities/Utilities';
+import { ButtonStyle } from './utilities/Utilities';
 
 const fetchPlanets = async (key, page) => {
     const res = await fetch(`http://swapi.dev/api/planets/?page=${page}`);

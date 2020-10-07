@@ -1,5 +1,5 @@
 import React from 'react';
-import {CardDiv} from './utilities/Utilities';
+import { CardDiv } from './utilities/Utilities';
 
 const Planet = ({planet}) => {
     return (<CardDiv>
